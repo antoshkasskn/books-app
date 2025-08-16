@@ -46,7 +46,7 @@ func TestBookLogic_GetList(t *testing.T) {
 		{Id: "1", Title: "Test Book 1", Author: "Author 1"},
 		{Id: "2", Title: "Test Book 2", Author: "Author 2"},
 	}
-	mockRepo.On("GetList", mock.Anything).Return(books, nil)
+	mockRepo.On("GetList", mock.Anything).Return(books, len(books), nil)
 
 	result, total, err := logic.GetList(context.Background())
 
