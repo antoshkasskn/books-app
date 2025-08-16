@@ -1,23 +1,20 @@
 package http
 
 import (
+	"book-app/internal/entity"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"log"
-	"net/http"
 )
 
-func Run(port int) {
-	var (
-		mux    = http.NewServeMux()
-		server = http.Server{
-			Addr:    fmt.Sprintf(":%d", port),
-			Handler: mux,
-		}
-	)
+func Run(port int, bookLogic entity.BookLogic) {
+	var g = gin.New()
 
-	mux.HandleFunc("GET /health", health)
+	g.Use(gin.Recovery())
+	registerHealthCheck(g.Group("/health"))
+	registerApiHandlers(g.Group("/api"), bookLogic)
 
-	if err := server.ListenAndServe(); err != nil {
+	if err := g.Run(fmt.Sprintf(":%d", port)); err != nil {
 		log.Fatalf("can't start http server by error: %v", err)
 	}
 }

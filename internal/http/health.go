@@ -1,17 +1,15 @@
 package http
 
 import (
-	"log"
+	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func health(w http.ResponseWriter, r *http.Request) {
-	log.Printf("handle request %s %s from %s %s", r.Method, r.RequestURI, r.RemoteAddr, r.UserAgent())
-	w.Header().Set("Content-Type", "text/plain")
-	_, err := w.Write([]byte("HEALTHY"))
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	w.WriteHeader(http.StatusOK)
+func registerHealthCheck(g *gin.RouterGroup) {
+	g.GET("/", health)
+}
+
+func health(ctx *gin.Context) {
+	ctx.Header("Content-Type", "text/plain")
+	ctx.String(http.StatusOK, "HEALTHY")
 }
