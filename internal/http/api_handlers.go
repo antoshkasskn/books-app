@@ -54,12 +54,15 @@ func (h *apiHandler) createBook(ctx *gin.Context) {
 }
 
 func (h *apiHandler) getBooks(ctx *gin.Context) {
-	books, err := h.bookLogic.GetList(ctx)
+	books, total, err := h.bookLogic.GetList(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
-	ctx.JSON(http.StatusOK, books)
+	ctx.JSON(http.StatusOK, gin.H{
+		"data":  books,
+		"total": total,
+	})
 }
 
 func (h *apiHandler) getBookById(ctx *gin.Context) {

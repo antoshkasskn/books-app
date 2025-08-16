@@ -25,7 +25,7 @@ func (logic *bookLogic) GetById(ctx context.Context, id string) (*entity.Book, e
 	return logic.bookRepo.GetById(ctx, id)
 }
 
-func (logic *bookLogic) GetList(ctx context.Context) ([]*entity.Book, error) {
+func (logic *bookLogic) GetList(ctx context.Context) ([]*entity.Book, int, error) {
 	return logic.bookRepo.GetList(ctx)
 }
 
