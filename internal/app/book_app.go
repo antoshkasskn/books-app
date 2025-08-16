@@ -1,9 +1,15 @@
 package app
 
-import "book-app/internal/http"
+import (
+	"book-app/internal/http"
+	"book-app/internal/logic"
+	"book-app/internal/repository"
+)
 
 const httpPort = 8080
 
 func Run() {
-	http.Run(httpPort)
+	bookRepo := repository.NewBookRepo()
+	bookLogic := logic.NewBookLogic(bookRepo)
+	http.Run(httpPort, bookLogic)
 }
