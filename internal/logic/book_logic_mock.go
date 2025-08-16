@@ -21,9 +21,9 @@ func (m *MockBookRepo) GetById(ctx context.Context, id string) (*entity.Book, er
 	return args.Get(0).(*entity.Book), args.Error(1)
 }
 
-func (m *MockBookRepo) GetList(ctx context.Context) ([]*entity.Book, error) {
+func (m *MockBookRepo) GetList(ctx context.Context) ([]*entity.Book, int, error) {
 	args := m.Called(ctx)
-	return args.Get(0).([]*entity.Book), args.Error(1)
+	return args.Get(0).([]*entity.Book), args.Int(1), args.Error(2)
 }
 
 func (m *MockBookRepo) DeleteById(ctx context.Context, id string) error {
