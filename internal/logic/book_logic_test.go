@@ -48,10 +48,11 @@ func TestBookLogic_GetList(t *testing.T) {
 	}
 	mockRepo.On("GetList", mock.Anything).Return(books, nil)
 
-	result, err := logic.GetList(context.Background())
+	result, total, err := logic.GetList(context.Background())
 
 	assert.NoError(t, err)
 	assert.Equal(t, books, result)
+	assert.Equal(t, total, len(books))
 	mockRepo.AssertExpectations(t)
 }
 
